@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityStandardAssets.Characters.FirstPerson;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerSetup : MonoBehaviourPunCallbacks
 {
@@ -18,6 +20,11 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
     private Animator animator;
     public Avatar fpsAvatar, nonFpsAvatar;
 
+    private ShootingScript shootingScript;
+
+    [SerializeField]
+    TextMeshProUGUI playerNameText;
+
     void Start()
     {
         playerMovementController = this.GetComponent<PlayerMovementController>();
@@ -30,12 +37,16 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
 
         animator.avatar = photonView.IsMine ? fpsAvatar : nonFpsAvatar;
 
+        shootingScript = this.GetComponent<ShootingScript>();
+
         if(photonView.IsMine)
         {
             GameObject playerUi = Instantiate(playerUiPrefab);
             playerMovementController.fixedTouchField = playerUi.transform.Find("RotationTouchField").GetComponent<FixedTouchField>();
             playerMovementController.joystick = playerUi.transform.Find("Fixed Joystick").GetComponent<Joystick>();
             fpsCamera.enabled = true;
+
+            playerUi.transform.Find("FireButton").GetComponent<Button>().onClick.AddListener(() => shootingScript.Fire());
         }
         else
         {
@@ -43,11 +54,7 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
             GetComponent<RigidbodyFirstPersonController>().enabled = false;
             fpsCamera.enabled = false;
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        playerNameText.text = photonView.Owner.NickName;
     }
 }
