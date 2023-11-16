@@ -12,7 +12,7 @@ public class LapController : MonoBehaviourPunCallbacks
 
     public enum RaiseEventsCode
     {
-        WhoFinishedEventCode = 0
+        WhoFinishedEventCode = 0,
     }
 
     private int finishOrder = 0;
@@ -51,8 +51,6 @@ public class LapController : MonoBehaviourPunCallbacks
             {
                 orderUIText.GetComponent<Text>().text = finishOrder + " " + nickNameOfFinishedPlayer;
             }
-
-            
         }
     }
 

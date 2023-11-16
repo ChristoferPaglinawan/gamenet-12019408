@@ -9,6 +9,8 @@ public class RacingGameManager : MonoBehaviour
     public GameObject[] vehiclePrefabs;
     public Transform[] startingPositions;
     public GameObject[] finisherTextUI;
+    public GameObject[] deathTextUI;
+    public GameObject drWinningTextUI;
 
     public static RacingGameManager instance = null;
     
@@ -50,7 +52,14 @@ public class RacingGameManager : MonoBehaviour
             }
         }
 
+        drWinningTextUI.SetActive(false);
+
         foreach(GameObject go in finisherTextUI)
+        {
+            go.SetActive(false);
+        }
+
+        foreach(GameObject go in deathTextUI)
         {
             go.SetActive(false);
         }
@@ -59,5 +68,10 @@ public class RacingGameManager : MonoBehaviour
     private void Update() 
     {
         
+    }
+
+    public void LeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
     }
 }

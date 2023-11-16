@@ -319,6 +319,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         GameMode = gameMode;
     }
+    
+    public void LeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
     #endregion
 
     #region Private Methods
